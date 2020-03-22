@@ -8,6 +8,7 @@ import org.apache.camel.model.rest.RestBindingMode;
 import org.springframework.stereotype.Component;
 
 import com.borokali.model.req.Student;
+import com.borokali.model.res.StudentResponse;
 
 @Component
 public class FirstRoute extends RouteBuilder {
@@ -28,11 +29,15 @@ public class FirstRoute extends RouteBuilder {
 		restConfiguration().component("servlet").host("localhost").port(8080).bindingMode(RestBindingMode.json);
 		
 		
-		rest().produces("application/json").post("/postStudent").type(Student.class).to("direct:studentProcessor")
+		rest().produces("application/json")
+		.post("/postStudent").type(Student.class).to("direct:studentProcessor")
 		.get("/hello").route().transform().simple("Hello ${header.name}, Welcome to Camel")
 		.endRest();
 		
-		from("direct:studentProcessor").to("studentProcessor");
+		from("direct:studentProcessor").to("studentProcessor")
+										.to("studentManipulator")
+										.to("studentResponsePopulator").log(LoggingLevel.INFO,"${body}")
+		;
 //	    from("direct:hello")
 //	      .log(LoggingLevel.INFO, "Hello World")
 //	      .transform().simple("Hello World");

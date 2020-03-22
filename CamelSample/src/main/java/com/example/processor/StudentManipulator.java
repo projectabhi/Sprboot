@@ -1,6 +1,5 @@
 package com.example.processor;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.camel.Exchange;
@@ -9,17 +8,18 @@ import org.apache.camel.Processor;
 import org.springframework.stereotype.Component;
 
 @Component
-public class StudentProcessor implements Processor{
+public class StudentManipulator implements Processor {
 
 	@Override
 	public void process(Exchange exchange) throws Exception {
-		System.out.println(exchange.getIn().getBody());
+		System.out.println("Inside StudentManipulator");
 		
-		Map<String, Object> map=new HashMap<String, Object>();
-		map.put("processor1", new Integer(1));
+		Map<String, Object> map=exchange.getIn().getBody(Map.class);
+		map.put("processor2", new Integer(1));
 		
 		Message msg=exchange.getIn();
 		msg.setBody(map, Map.class);
+		
 	}
 
 }
