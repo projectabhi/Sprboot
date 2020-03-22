@@ -5,7 +5,7 @@ import org.apache.camel.Processor;
 import org.springframework.stereotype.Component;
 
 @Component
-public class GetProcessor implements Processor{
+public class StudentProcessor implements Processor{
 
 	@Override
 	public void process(Exchange exchange) throws Exception {

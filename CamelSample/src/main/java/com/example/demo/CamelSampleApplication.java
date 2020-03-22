@@ -24,6 +24,7 @@ public class CamelSampleApplication {
 				"/CamelSample/*");
 		registrationBean.setName("CamelServlet");
 		registrationBean.setLoadOnStartup(2);
+		
 		return registrationBean;
 	}
 }
