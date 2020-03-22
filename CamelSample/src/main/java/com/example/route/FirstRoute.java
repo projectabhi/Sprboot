@@ -1,14 +1,14 @@
 package com.example.route;
 
-import org.apache.camel.Exchange;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import org.apache.camel.LoggingLevel;
-import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
 import org.springframework.stereotype.Component;
 
 import com.borokali.model.req.Student;
-import com.borokali.model.res.StudentResponse;
 
 @Component
 public class FirstRoute extends RouteBuilder {
@@ -26,6 +26,8 @@ public class FirstRoute extends RouteBuilder {
 		 * 
 		 * } }).to("file:C:/outputFolder");
 		 */
+		ExecutorService executor = Executors.newFixedThreadPool(16);
+		
 		restConfiguration().component("servlet").host("localhost").port(8080).bindingMode(RestBindingMode.json);
 		
 		
@@ -33,14 +35,19 @@ public class FirstRoute extends RouteBuilder {
 		.post("/postStudent").type(Student.class).to("direct:studentProcessor")
 		.get("/hello").route().transform().simple("Hello ${header.name}, Welcome to Camel")
 		.endRest();
-		
-		from("direct:studentProcessor").to("studentProcessor")
-										.to("studentManipulator")
-										.to("studentResponsePopulator").log(LoggingLevel.INFO,"${body}")
-		;
-//	    from("direct:hello")
-//	      .log(LoggingLevel.INFO, "Hello World")
-//	      .transform().simple("Hello World");
+		//Unicast processing
+		/*
+		 * from("direct:studentProcessor").to("studentProcessor")
+		 * .to("studentManipulator")
+		 * .to("studentResponsePopulator").log(LoggingLevel.INFO,"${body}")
+		 */
+		from("direct:studentProcessor").streamCaching()/* .to("studentProcessor") */
+										.to("direct:studentMulticast").log(LoggingLevel.INFO,"${body}");
+		from("direct:studentMulticast").multicast()
+										.parallelProcessing().executorService(executor).aggregationStrategyRef("studentAggregator")
+										.to("seda:studentThread1","seda:studentThread2").end();
+		from("seda:studentThread1").to("studentThread1");
+		from("seda:studentThread2").to("studentThread2");
 	}
 
 }
