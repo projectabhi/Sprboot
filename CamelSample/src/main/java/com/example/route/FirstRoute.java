@@ -41,6 +41,8 @@ public class FirstRoute extends RouteBuilder {
 		 * .to("studentManipulator")
 		 * .to("studentResponsePopulator").log(LoggingLevel.INFO,"${body}")
 		 */
+		
+		//Multicast processing
 		from("direct:studentProcessor").streamCaching()/* .to("studentProcessor") */
 										.to("direct:studentMulticast").log(LoggingLevel.INFO,"${body}");
 		from("direct:studentMulticast").multicast()
