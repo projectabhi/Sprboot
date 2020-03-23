@@ -47,8 +47,7 @@ public class FirstRoute extends RouteBuilder {
 										.to("direct:studentMulticast").log(LoggingLevel.INFO,"${body}");
 		from("direct:studentMulticast").multicast()
 										.parallelProcessing().executorService(executor)
-										.to("seda:studentThread1")
-										.to("seda:studentThread2")
+										.to("seda:studentThread1","seda:studentThread2")
 										.parallelAggregate().aggregationStrategyRef("studentAggregator")
 										.end();
 		from("seda:studentThread1").to("studentThread1");
