@@ -2,9 +2,14 @@ package com.example.multicast.threads;
 
 import java.util.TimerTask;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 
 public class StudentThread extends TimerTask{
 
+	private static final Logger log=LogManager.getLogger(StudentThread.class);
+	
 	private String name;
 
 	public StudentThread(String name) {
@@ -12,7 +17,7 @@ public class StudentThread extends TimerTask{
 	   }
 	@Override
 	public void run() {
-		System.out.println("Task "+name+"-executed...");
+		log.info("Task "+name+"-executed...");
 	}
 
 }
