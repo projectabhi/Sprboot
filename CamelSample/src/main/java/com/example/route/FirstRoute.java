@@ -44,8 +44,11 @@ public class FirstRoute extends RouteBuilder {
 		from("direct:studentProcessor").streamCaching()/* .to("studentProcessor") */
 										.to("direct:studentMulticast").log(LoggingLevel.INFO,"${body}");
 		from("direct:studentMulticast").multicast()
-										.parallelProcessing().executorService(executor).aggregationStrategyRef("studentAggregator")
-										.to("seda:studentThread1","seda:studentThread2").end();
+										.parallelProcessing().executorService(executor)
+										.to("seda:studentThread1")
+										.to("seda:studentThread2")
+										.parallelAggregate().aggregationStrategyRef("studentAggregator")
+										.end();
 		from("seda:studentThread1").to("studentThread1");
 		from("seda:studentThread2").to("studentThread2");
 	}
