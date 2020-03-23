@@ -4,6 +4,8 @@ import java.util.Timer;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import com.example.multicast.threads.StudentThread;
@@ -11,6 +13,8 @@ import com.example.multicast.threads.StudentThread;
 @Component
 public class StudentThread2 implements Processor {
 
+	private static final Logger log=LogManager.getLogger(StudentThread2.class);
+	
 	@Override
 	public void process(Exchange exchange) throws Exception {
 		StudentThread studentThread = new StudentThread("StudentThread2");
