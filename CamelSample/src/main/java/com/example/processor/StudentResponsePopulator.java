@@ -27,6 +27,13 @@ public class StudentResponsePopulator implements Processor{
 		
 		log.info("Getting property from first endpoint:"+exchange.getProperty("processor1"));
 		int result=(int)exchange.getProperty("processor1")+response.getRollNo();
+		
+		log.info("Getting property from subsequent endpoint...");
+		if(exchange.getProperty("processor2") != null)
+			result = result+(int)exchange.getProperty("processor2");
+		if(exchange.getProperty("processor3") != null)
+			result = result+(int)exchange.getProperty("processor3");
+				
 		response.setRollNo(result);
 		
 		log.info("Setting response...");

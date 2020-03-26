@@ -33,6 +33,7 @@ public class FirstRoute extends RouteBuilder {
 		
 		rest().produces("application/json")
 		.post("/postStudent").type(Student.class).to("direct:studentProcessor")
+		.post("/postStudentName").type(Student.class).to("direct:studentStepProcessor")
 		.get("/hello").route().transform().simple("Hello ${header.name}, Welcome to Camel")
 		.endRest();
 		//Unicast processing
@@ -41,6 +42,15 @@ public class FirstRoute extends RouteBuilder {
 		 * .to("studentManipulator")
 		 * .to("studentResponsePopulator").log(LoggingLevel.INFO,"${body}")
 		 */
+		from("direct:studentStepProcessor").routeId("stepprocessing")
+		    .to("studentProcessor")
+		    .step("Step1")
+		    	.to("studentStepProc1")
+		    .end()
+		    .step("Step2")
+	    		.to("studentStepProc2")
+	    	.end()
+		   .to("studentResponsePopulator").log(LoggingLevel.INFO,"${body}");
 		
 		//Multicast processing
 		from("direct:studentProcessor").streamCaching()

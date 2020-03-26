@@ -10,6 +10,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
+import com.borokali.model.res.StudentResponse;
+
 @Component
 public class StudentProcessor implements Processor{
 	private static final Logger log=LogManager.getLogger(StudentProcessor.class);
@@ -26,6 +28,10 @@ public class StudentProcessor implements Processor{
 		 */
 		
 		exchange.setProperty("processor1", new Integer(1));
+		StudentResponse response=new StudentResponse();
+		
+		exchange.setProperty("response",response);
+		
 	}
 
 }
