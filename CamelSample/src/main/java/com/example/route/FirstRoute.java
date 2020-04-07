@@ -3,18 +3,39 @@ package com.example.route;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import org.apache.camel.Exchange;
 import org.apache.camel.LoggingLevel;
+import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
 import org.springframework.stereotype.Component;
 
 import com.borokali.model.req.Student;
+import com.borokali.model.res.StudentResponse;
+import com.example.exception.CustomBusnsException;
 
 @Component
 public class FirstRoute extends RouteBuilder {
 
 	@Override
 	public void configure() throws Exception {
+		
+		onException(CustomBusnsException.class).process(new Processor() {
+			
+			@Override
+			public void process(Exchange exchange) throws Exception {
+				CustomBusnsException exception=exchange.getProperty(Exchange.EXCEPTION_CAUGHT, CustomBusnsException.class);;
+				System.out.println(exception.getErrorCode().getErrCode());
+				System.out.println(exception.getMessage());
+				
+				StudentResponse response=new StudentResponse();
+				response.setErrorCode(exception.getErrorCode().getErrCode());
+				response.setErrMsg(exception.getMessage());
+				
+				exchange.getOut().setBody(response);
+			}
+		}).log("Received body: ${body}").handled(true).end();
+		
 		onException(Exception.class).log("Exception retry...").maximumRedeliveries(3).maximumRedeliveryDelay(2000);
 		//from("timer:foo").to("log:bar");
 		/*
@@ -60,7 +81,7 @@ public class FirstRoute extends RouteBuilder {
 		from("direct:studentMulticast").multicast()
 									   .parallelProcessing().executorService(executor)
 									   .to("seda:studentThread1","seda:studentThread2")
-									   .parallelAggregate().aggregationStrategyRef("studentAggregator")
+									   .parallelAggregate().aggregationStrategyRef("studentAggregator").stopOnException()
 									   .end();
 		from("seda:studentThread1").to("studentThread1");
 		from("seda:studentThread2").to("studentThread2");

@@ -8,6 +8,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
+import com.example.exception.CustomBusnsException;
+import com.example.exception.ErrorCode;
 import com.example.multicast.threads.StudentThread;
 
 @Component
@@ -30,7 +32,7 @@ public class StudentThread1 implements Processor {
 
 		//Message msg = exchange.getIn();
 		//msg.setBody(map, Map.class);
-
+		throw new CustomBusnsException("Throwing error from StudentThread1", ErrorCode.CONNECT_EXCEPTION);
 	}
 
 }
