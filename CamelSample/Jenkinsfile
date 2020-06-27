@@ -11,10 +11,8 @@ pipeline {
             }
         }
         stage('Compile-package') {
-            steps {
             	def M2_HOME = tool name: 'MAVEN3_6_3', type: 'maven'
                 sh "${M2_HOME}/bin/mvn package"
-            }
         }
     }
 }
