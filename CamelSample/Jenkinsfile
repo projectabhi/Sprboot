@@ -45,8 +45,7 @@ pipeline {
         			sh '''
                     cd /home/borokali/CamelSample
                     sh kill_boot.sh
-                    sh deploy.sh 8088
-                    sh deploy.sh 8089
+                    sh runCamel.sh
                     '''
         	}
         }
