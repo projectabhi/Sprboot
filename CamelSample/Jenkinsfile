@@ -1,7 +1,19 @@
 pipeline {
     agent any
+    tools { 
+       maven 'MAVEN3_6_3'
+       jdk 'JAVA11'
+    }
     stages {
-        stage('Build') {
+    	stage ('Initialize') {
+            steps {
+                sh '''
+                    echo "PATH = ${PATH}"
+                    echo "M2_HOME = ${M2_HOME}"
+                '''
+            }
+        }
+        stage('Print') {
             steps {
                 sh 'echo "Hello World"'
                 sh '''
@@ -12,8 +24,7 @@ pipeline {
         }
         stage('Compile-package') {
         	steps {
-        			def M2_HOME = tool name: 'MAVEN3_6_3', type: 'maven'
-                	sh "${M2_HOME}/bin/mvn package"
+                	sh "mvn package"
         	}
         }
     }
