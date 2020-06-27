@@ -31,5 +31,10 @@ pipeline {
                     '''
         	}
         }
+        stage('Deploy') {
+        	steps {
+        			sh 'ssh borokali@localhost ls -lrt'
+        	}
+        }
     }
 }
