@@ -24,8 +24,8 @@ pipeline {
         }
         stage('Compile-package') {
         	steps {
-        			sh "cd CamelSample"
-                	sh "mvn package"
+        			sh 'cd CamelSample'
+                	sh 'mvn package'
         	}
         }
     }
