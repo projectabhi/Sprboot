@@ -33,7 +33,7 @@ pipeline {
         }
         stage('Deploy') {
         	steps {
-        			sh 'ssh borokali@localhost ls -lrt'
+        			sh 'cp -r target/CamelSample-0.0.1-SNAPSHOT.jar /home/borokali/CamelSample/.'
         	}
         }
     }
