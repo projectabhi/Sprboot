@@ -45,7 +45,8 @@ pipeline {
         			sh '''
                     cd /home/borokali/CamelSample
                     sh kill_boot.sh
-                    sh deploy.sh
+                    nohup sh deploy.sh 8088 &
+                    nohup sh deploy.sh 8089 &
                     '''
         	}
         }
