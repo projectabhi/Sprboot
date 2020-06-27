@@ -42,9 +42,11 @@ pipeline {
         }
         stage('Deploy') {
         	steps {
-        			sh 'cd /home/borokali/CamelSample'
-                    sh 'sh kill_boot.sh'
-                    sh 'JENKINS_NODE_COOKIE=dontKillMe nohup sh deploy.sh 8088 &'
+        			sh '''
+                    cd /home/borokali/CamelSample
+                    sh kill_boot.sh
+                    JENKINS_NODE_COOKIE=dontKillMe nohup sh deploy.sh 8088 &
+                    '''
         	}
         }
     }
