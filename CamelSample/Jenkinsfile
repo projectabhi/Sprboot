@@ -37,6 +37,7 @@ pipeline {
                     cd CamelSample/target
                     rm -rf /home/borokali/CamelSample/*.jar
                     cp -r *.jar /home/borokali/CamelSample/.
+                    ssh adey@192.168.1.101 "echo Hello"
                     '''
         	}
         }
