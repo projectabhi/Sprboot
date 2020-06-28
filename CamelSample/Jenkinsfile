@@ -31,13 +31,20 @@ pipeline {
                     '''
         	}
         }
+        stage ('SSH') {
+            steps{
+                sshagent(credentials : ['ssh_fc_adey']) {
+                    sh 'ssh -o StrictHostKeyChecking=no adey@192.168.1.101 uptime'
+                    sh 'ssh -v adey@192.168.1.101'
+                    sh 'scp ./home/borokali/CamelSample/*.jar adey@192.168.1.101:/home/adey/.'
+            }
+        }
         stage('Transfer') {
         	steps {
         			sh '''
                     cd CamelSample/target
                     rm -rf /home/borokali/CamelSample/*.jar
                     cp -r *.jar /home/borokali/CamelSample/.
-                    ssh adey@192.168.1.101 "echo Hello"
                     '''
         	}
         }
