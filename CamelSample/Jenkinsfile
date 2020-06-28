@@ -36,7 +36,7 @@ pipeline {
                 sshagent(credentials : ['ssh_rsa_borokali']) {
                     sh 'ssh -o StrictHostKeyChecking=no adey@192.168.1.101 uptime'
                     sh 'ssh -v adey@192.168.1.101'
-                    sh 'scp ./home/borokali/CamelSample/*.jar adey@192.168.1.101:/home/adey/.'
+                    sh 'scp /home/borokali/CamelSample/*.jar adey@192.168.1.101:/home/adey/.'
                  }
             }
         }
