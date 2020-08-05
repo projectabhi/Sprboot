@@ -8,11 +8,12 @@ import com.example.split.to.Order;
 
 @Component
 public class OrderItemProcessor implements Processor {
-
+	private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OrderItemProcessor.class);
+	
 	@Override
 	public void process(Exchange exchange) throws Exception {
 		Order order=exchange.getIn().getBody(Order.class);
-		System.out.println("Processing item:"+order.getItemName());
+		log.info("Processing item:"+order.getItemName());
 		order.setProcessed(true);
 	}
 
