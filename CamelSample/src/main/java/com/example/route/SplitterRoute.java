@@ -2,14 +2,12 @@ package com.example.route;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
-import org.springframework.core.task.support.ExecutorServiceAdapter;
 import org.springframework.stereotype.Component;
 
 import com.example.split.to.Order;
@@ -42,8 +40,10 @@ public class SplitterRoute extends RouteBuilder{
          
         from("direct:processOrder")
         .log("Process order ${exchangeProperty.order}")
-        .split(simple("${exchangeProperty.order}")).parallelProcessing().executorService(threadPool)
-        .to("direct:processOrderItem")
+        .split(simple("${exchangeProperty.order}"))
+        	.parallelProcessing().executorService(threadPool).parallelAggregate().aggregationStrategyRef("orderAggregator").stopOnException()
+        		.to("direct:processOrderItem")
+        	
         .end()
         .log("Order processed: ${exchangeProperty.order}");
          

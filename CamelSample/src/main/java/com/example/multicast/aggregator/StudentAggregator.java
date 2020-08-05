@@ -7,7 +7,6 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import com.borokali.model.res.StudentResponse;
-import com.example.processor.StudentThread2;
 
 @Component
 public class StudentAggregator implements AggregationStrategy{

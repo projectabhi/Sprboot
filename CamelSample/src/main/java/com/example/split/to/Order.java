@@ -36,5 +36,10 @@ public class Order {
 		this.price = price;
 		this.processed = processed;
 	}
+	@Override
+	public String toString() {
+		return "Order [itemName=" + itemName + ", quantity=" + quantity + ", price=" + price + ", processed="
+				+ processed + "]";
+	}
     
 }
