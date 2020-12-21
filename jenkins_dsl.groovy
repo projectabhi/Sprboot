@@ -1,7 +1,8 @@
 def project = 'Sprboot'
 def branchApi = new URL("https://api.github.com/repos/projectabhi/${project}/branches")
 def branches = new groovy.json.JsonSlurper().parse(branchApi.newReader())
-branches.each {
+folder('MyFolder') {
+	branches.each {
 	def branchName = it.name
 	def jobName = "${project}-${branchName}".replaceAll('/','-')
 	pipelineJob(jobName) {
@@ -19,4 +20,5 @@ branches.each {
 		    }
 		  }
 	}
+}
 }
