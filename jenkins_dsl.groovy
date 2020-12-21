@@ -11,19 +11,7 @@ branches.each {
 		description("${branchName}")
 	}
 	
-	listView("${fullPath}") {
-    		description("${branchName}")
-		jobs {
-			name("${fullPath}/${jobName}")
-		}
-		jobFilters {
-			status {
-			    status(Status.UNSTABLE)
-			}
-		}
-	}
-	
-	pipelineJob("MyFolder/${branchName}/"+jobName) {
+	pipelineJob("${fullPath}/"+jobName) {
 		def repo = "https://github.com/projectabhi/${project}.git"
 		definition {
 			cpsScm {
@@ -38,6 +26,13 @@ branches.each {
 					}
 				}
 			}
+		}
+	}
+	
+	listView("${fullPath}") {
+    		description("${branchName}")
+		jobs {
+			name("${fullPath}/"+jobName)
 		}
 	}
 }
