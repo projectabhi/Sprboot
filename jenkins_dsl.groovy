@@ -5,12 +5,12 @@ branches.each {
 	def branchName = it.name
 	def jobName = "${project}-${branchName}".replaceAll('/','-')
 	
-	folder("${branchName}") {
+	folder("MyFolder/${branchName}") {
 		displayName("${branchName}")
 		description("${branchName}")
 	}
 	
-	pipelineJob(jobName) {
+	pipelineJob("MyFolder/${branchName}/"+jobName) {
 		def repo = "https://github.com/projectabhi/${project}.git"
 		definition {
 			cpsScm {
