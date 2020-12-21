@@ -4,14 +4,23 @@ def branches = new groovy.json.JsonSlurper().parse(branchApi.newReader())
 branches.each {
 	def branchName = it.name
 	def jobName = "${project}-${branchName}".replaceAll('/','-')
+	def fullPath = "MyFolder/${branchName}"
 	
-	folder("MyFolder/${branchName}") {
+	folder("${fullPath}") {
 		displayName("${branchName}")
 		description("${branchName}")
 	}
 	
-	listView("MyFolder/${branchName}") {
+	listView("${fullPath}") {
     		description("${branchName}")
+		jobs {
+			name("${fullPath}/${jobName}")
+		}
+		jobFilters {
+			status {
+			    status(Status.UNSTABLE)
+			}
+		}
 	}
 	
 	pipelineJob("MyFolder/${branchName}/"+jobName) {
