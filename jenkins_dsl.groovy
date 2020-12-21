@@ -10,7 +10,7 @@ branches.each {
 		description("${branchName}")
 	}
 	
-	listView("${branchName}") {
+	listView("MyFolder/${branchName}") {
     		description("${branchName}")
 	}
 	
