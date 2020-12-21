@@ -14,8 +14,8 @@ branches.each {
 	listView("${fullPath}") {
 	    	description("${branchName} CI Pipeline")
 		jobs{
-			name("${fullPath}/"+jobName)
-			regex(jobName)
+			name(jobName)
+			regex(".*")
 		}
 	}	
 	
