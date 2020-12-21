@@ -9,14 +9,6 @@ branches.each {
 	folder("${fullPath}") {
 		displayName("${branchName}")
 		description("${branchName}")
-	}
-	
-	listView("${fullPath}") {
-	    	description("${branchName} CI Pipeline")
-		jobs {
-			name("${jobName}")
-			regex("${project}-${branchName}")
-		}
 	}	
 	
 	pipelineJob("${fullPath}/"+jobName) {
@@ -36,4 +28,11 @@ branches.each {
 			}
 		}
 	}
+	
+	listView("${fullPath}") {
+	    	description("${branchName} CI Pipeline")
+		jobs {
+			name("${jobName}")
+		}
+	}	
 }
