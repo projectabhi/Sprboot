@@ -13,7 +13,7 @@ branches.each {
 	
 	listView("${fullPath}") {
 	    	description("${branchName} CI Pipeline")
-		jobs{
+		jobs {
 			name("${jobName}")
 		}
 	}	
