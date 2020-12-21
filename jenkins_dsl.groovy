@@ -15,6 +15,7 @@ branches.each {
 	    	description("${branchName} CI Pipeline")
 		jobs{
 			name("${fullPath}/"+jobName)
+			regex(jobName)
 		}
 	}	
 	
