@@ -12,18 +12,19 @@ branches.each {
 	}
 	
 	listView("${fullPath}") {
-	pipelineJob("${fullPath}/"+jobName) {
-		def repo = "https://github.com/projectabhi/${project}.git"
-		definition {
-			cpsScm {
-				scm {
-					git {
-						remote { 
-							url(repo) 
+		pipelineJob("${fullPath}/"+jobName) {
+			def repo = "https://github.com/projectabhi/${project}.git"
+			definition {
+				cpsScm {
+					scm {
+						git {
+							remote { 
+								url(repo) 
+							}
+						branch("${branchName}")
+						scriptPath('CamelSample/Jenkinsfile')
+						extensions { }  // required as otherwise it may try to tag the repo, which you may not want
 						}
-					branch("${branchName}")
-					scriptPath('CamelSample/Jenkinsfile')
-					extensions { }  // required as otherwise it may try to tag the repo, which you may not want
 					}
 				}
 			}
