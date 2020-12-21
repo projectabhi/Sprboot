@@ -10,6 +10,10 @@ branches.each {
 		description("${branchName}")
 	}
 	
+	listView("${branchName}") {
+    		description("${branchName}")
+	}
+	
 	pipelineJob("MyFolder/${branchName}/"+jobName) {
 		def repo = "https://github.com/projectabhi/${project}.git"
 		definition {
