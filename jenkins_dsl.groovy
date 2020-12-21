@@ -11,9 +11,7 @@ branches.each {
 		description("${branchName}")
 	}
 	
-	buildPipelineView("${fullPath}") {
-	    title("${branchName} CI Pipeline")
-	}
+	
 	
 	pipelineJob("${fullPath}/"+jobName) {
 		def repo = "https://github.com/projectabhi/${project}.git"
@@ -30,6 +28,13 @@ branches.each {
 					}
 				}
 			}
+		}
+	}
+	
+	listView("${fullPath}") {
+	    	description("${branchName} CI Pipeline")
+		jobs {
+			name("${fullPath}/"+jobName)
 		}
 	}
 }
