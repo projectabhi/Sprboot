@@ -15,7 +15,6 @@ branches.each {
 	    	description("${branchName} CI Pipeline")
 		jobs{
 			name(jobName)
-			regex(".*")
 		}
 	}	
 	
