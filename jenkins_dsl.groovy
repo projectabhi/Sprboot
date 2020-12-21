@@ -5,9 +5,9 @@ branches.each {
 	def branchName = it.name
 	def jobName = "${project}-${branchName}".replaceAll('/','-')
 	
-	folder("MyFolder") {
-		displayName("MyFolder")
-		description("MyFolder")
+	folder("${branchName}") {
+		displayName("${branchName}")
+		description("${branchName}")
 	}
 	
 	pipelineJob(jobName) {
