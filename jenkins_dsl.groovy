@@ -1,15 +1,15 @@
 def project = 'Sprboot'
 def branchApi = new URL("https://api.github.com/repos/projectabhi/${project}/branches")
 def branches = new groovy.json.JsonSlurper().parse(branchApi.newReader())
-
-folder('MyFolder') {
-	displayName('MyFolder')
-	description('MyFolder')
-}
-
 branches.each {
 	def branchName = it.name
 	def jobName = "${project}-${branchName}".replaceAll('/','-')
+	
+	folder("MyFolder") {
+		displayName("MyFolder")
+		description("MyFolder")
+	}
+	
 	pipelineJob(jobName) {
 		def repo = "https://github.com/projectabhi/${project}.git"
 		definition {
