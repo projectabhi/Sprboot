@@ -55,9 +55,9 @@ public class FirstRoute extends RouteBuilder {
 		rest().produces("application/json")
 		.post("/postStudent").type(Student.class).to("direct:studentProcessor")
 		.post("/postStudentName").type(Student.class).to("direct:studentStepProcessor")
-		.get("/hello").route().transform().simple("Hello ${header.name}, Welcome to Camel")
+		.get("/hello").route().log("Hello get request").transform().simple("Hello ${header.name}, Welcome to Camel")
 		.endRest();
-		//Unicast processing
+//		Unicast processing
 		/*
 		 * from("direct:studentProcessor").to("studentProcessor")
 		 * .to("studentManipulator")
