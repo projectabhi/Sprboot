@@ -3,7 +3,9 @@ package com.example.demo;
 import com.example.persitence.model.Student;
 import com.example.persitence.repo.StudentRepo;
 import com.example.processor.StudentProcessor;
+import org.apache.camel.test.spring.CamelSpringBootRunner;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,6 +16,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @SpringBootTest
+@RunWith(CamelSpringBootRunner.class)
 class CamelSampleApplicationTests {
 
 	@Test
